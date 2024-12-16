@@ -38,7 +38,7 @@ pub fn canonicalize(path: &str) -> String {
                     if is_absolute {
                         buf.push('/');
                     }
-                } else if &buf[buf.len() - 1..] != "/" {
+                } else if !&buf.ends_with('/') {
                     buf.push('/');
                 }
                 buf.push_str(part);
@@ -93,5 +93,6 @@ mod tests {
         assert_eq!(canonicalize("/bleh/bar/../../foo"), "/foo");
         assert_eq!(canonicalize("/bleh/bar/../../foo/.."), "/");
         assert_eq!(canonicalize("/bleh/bar/../../foo/../meh"), "/meh");
+        assert_eq!(canonicalize("/@test_7_tmpæ/_parent_foo/"), "/@test_7_tmpæ/_parent_foo");
     }
 }
